@@ -77,6 +77,24 @@ class GameView(arcade.View):
             self.rooms[self.current_room].wall_list,
         )
 
+        self.tutorial_text_object = arcade.Text(
+            text="Talk [E]",
+            x=50,
+            y= 300,
+            color=arcade.color.WHITE,
+            font_size=40,
+            font_name="Helvetica"
+        )
+
+        self.dialogue_text_object = arcade.Text(
+            text="",
+            x=270,
+            y=100,
+            color=arcade.color.WHITE,
+            font_size=16,
+            font_name="Helvetica"
+        )
+
         self.dialogue_lines = [
             "Dearest Ansbach...it seems we have a Tarnished visitor.",
             "They're disturbing our round bois. Would you attend to them, please?",
@@ -85,12 +103,11 @@ class GameView(arcade.View):
         ]
         self.dialogue_index = 0
         self.show_dialogue = False
-        self.dialogue_text = ""
 
         self.quest_given = False
     
     def display_dialogue(self, text):
-        self.dialogue_text = text
+        self.dialogue_text_object.text = text
         self.show_dialogue = True
 
     def on_draw(self):
@@ -106,9 +123,13 @@ class GameView(arcade.View):
         self.player_list.draw()
         self.npc_list.draw()
 
+        distance = arcade.get_distance_between_sprites(self.player_sprite, self.npc_sprite)
+        if distance < TALK_DISTANCE:
+            self.tutorial_text_object.draw()
+
         if self.show_dialogue:
             arcade.draw_lrbt_rectangle_filled(250, WINDOW_WIDTH, 0, 150, arcade.color.BLACK)
-            arcade.draw_text(self.dialogue_text, 270, 100, arcade.color.WHITE, 16)
+            self.dialogue_text_object.draw()
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.LEFT:
