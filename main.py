@@ -13,7 +13,7 @@ WINDOW_TITLE = "Mohg Quest"
 
 MOVEMENT_SPEED = 5
 
-BACKGROUND_1 = arcade.load_texture("assets/images/mohgwynpalacebg.png")
+BACKGROUND_1 = arcade.load_texture("assets/images/MPBG.png")
 BACKGROUND_2 = arcade.load_texture("assets/images/MPBG2.png")
 
 
