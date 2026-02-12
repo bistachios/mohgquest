@@ -77,13 +77,15 @@ class GameView(arcade.View):
             self.rooms[self.current_room].wall_list,
         )
 
+        arcade.load_font("assets/fonts/Quintessential-Regular.ttf")
+
         self.tutorial_text_object = arcade.Text(
             text="Talk [E]",
             x=50,
             y= 300,
             color=arcade.color.WHITE,
             font_size=40,
-            font_name="Helvetica"
+            font_name="Quintessential"
         )
 
         self.dialogue_text_object = arcade.Text(
@@ -91,8 +93,8 @@ class GameView(arcade.View):
             x=270,
             y=100,
             color=arcade.color.WHITE,
-            font_size=16,
-            font_name="Helvetica"
+            font_size=20,
+            font_name="Quintessential"
         )
 
         self.dialogue_lines = [
