@@ -5,7 +5,7 @@ NPC_SCALING = 0.8
 SPRITE_NATIVE_SIZE = 128
 SPRITE_SIZE = int(SPRITE_NATIVE_SIZE * SPRITE_SCALING)
 
-TALK_DISTANCE = 100
+TALK_DISTANCE = 150
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -78,7 +78,8 @@ class GameView(arcade.View):
         )
 
         self.dialogue_lines = [
-            "Dearest Ansbach...it seems we have a Tarnished visitor. Would you attend to them, please?",
+            "Dearest Ansbach...it seems we have a Tarnished visitor.",
+            "They're disturbing our round bois. Would you attend to them, please?",
             "At once, Lord Mohg.",
             "Thank you. Return to me when the deed is done."
         ]
@@ -111,8 +112,10 @@ class GameView(arcade.View):
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.LEFT:
+            self.player_sprite.scale_x = -SPRITE_SCALING
             self.player_sprite.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT:
+            self.player_sprite.scale_x = SPRITE_SCALING
             self.player_sprite.change_x = MOVEMENT_SPEED
         elif key == arcade.key.E:
             distance = arcade.get_distance_between_sprites(self.player_sprite, self.npc_sprite)
