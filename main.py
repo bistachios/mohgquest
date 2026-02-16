@@ -88,9 +88,18 @@ class GameView(arcade.View):
             font_name="Quintessential"
         )
 
+        self.speaker_text_object = arcade.Text(
+            text="Mohg, Lord of Blood",
+            x=275,
+            y=160,
+            color=arcade.color.RED,
+            font_size=20,
+            font_name="Quintessential"
+        )
+
         self.dialogue_text_object = arcade.Text(
             text="",
-            x=270,
+            x=290,
             y=100,
             color=arcade.color.WHITE,
             font_size=20,
@@ -98,19 +107,30 @@ class GameView(arcade.View):
         )
 
         self.dialogue_lines = [
-            "Dearest Ansbach...it seems we have a Tarnished visitor.",
-            "They're disturbing our round bois. Would you attend to them, please?",
-            "At once, Lord Mohg.",
-            "Thank you. Return to me when the deed is done."
+            {"speaker": "Mohg, Lord of Blood", "text": "Dearest Ansbach...it seems we have a Tarnished visitor."},
+            {"speaker": "Mohg, Lord of Blood", "text": "They're disturbing our round bois. Would you attend to them, please?"},
+            {"speaker": "Pureblood Knight Ansbach", "text": "At once, Lord Mohg."},
+            {"speaker": "Mohg, Lord of Blood", "text": "Thank you. Return to me when the deed is done."}
         ]
         self.dialogue_index = 0
         self.show_dialogue = False
 
         self.quest_given = False
     
-    def display_dialogue(self, text):
-        self.dialogue_text_object.text = text
-        self.show_dialogue = True
+    
+    def update_dialogue(self):
+        if self.dialogue_index < len(self.dialogue_lines):
+            current_line = self.dialogue_lines[self.dialogue_index]
+        
+            self.speaker_text_object.text = current_line["speaker"]
+            self.dialogue_text_object.text = current_line["text"]
+        
+            if current_line["speaker"] == "Pureblood Knight Ansbach":
+                self.speaker_text_object.color = arcade.color.SILVER
+            else:
+                self.speaker_text_object.color = arcade.color.RED
+            
+            self.show_dialogue = True
 
     def on_draw(self):
         self.clear()
@@ -130,8 +150,17 @@ class GameView(arcade.View):
             self.tutorial_text_object.draw()
 
         if self.show_dialogue:
-            arcade.draw_lrbt_rectangle_filled(250, WINDOW_WIDTH, 0, 150, arcade.color.BLACK)
+            arcade.draw_lrbt_rectangle_filled(250, 1100, 50, 200, arcade.color.BLACK)
+            arcade.draw_lrbt_rectangle_outline(
+    250, 
+    1100, 
+    50, 
+    200, 
+    arcade.color.GOLD, 
+    border_width=4
+)
             self.dialogue_text_object.draw()
+            self.speaker_text_object.draw()
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.LEFT:
@@ -144,18 +173,21 @@ class GameView(arcade.View):
             distance = arcade.get_distance_between_sprites(self.player_sprite, self.npc_sprite)
             if distance < TALK_DISTANCE:
                 if self.quest_given and not self.show_dialogue:
-                    self.display_dialogue("Back so soon? Did you wish for a kiss before you left, my dear?")
+                    self.speaker_text_object.text = "Mohg, Lord of Blood"
+                    self.dialogue_text_object.text = "Back so soon? Did you wish for a kiss before you left, my dear?"
+                    self.show_dialogue = True
                     return
                 if not self.show_dialogue:
-                    self.show_dialogue = True
                     self.dialogue_index = 0
+                    self.show_dialogue = True
+                    self.update_dialogue()
                 else:
                     self.dialogue_index += 1
-                if self.dialogue_index < len(self.dialogue_lines):
-                    self.display_dialogue(self.dialogue_lines[self.dialogue_index])
-                else:
-                    self.show_dialogue = False
-                    self.quest_given = True
+                    if self.dialogue_index < len(self.dialogue_lines):
+                        self.update_dialogue()
+                    else:
+                        self.show_dialogue = False
+                        self.quest_given = True
 
     def on_key_release(self, key, modifiers):
 
