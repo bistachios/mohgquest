@@ -103,12 +103,14 @@ class GameView(arcade.View):
             y=100,
             color=arcade.color.WHITE,
             font_size=20,
-            font_name="Quintessential"
+            font_name="Quintessential",
+            multiline=True,
+            width=800
         )
 
         self.dialogue_lines = [
             {"speaker": "Mohg, Lord of Blood", "text": "Dearest Ansbach...it seems we have a Tarnished visitor."},
-            {"speaker": "Mohg, Lord of Blood", "text": "They're disturbing our round bois. Would you attend to them, please?"},
+            {"speaker": "Mohg, Lord of Blood", "text": "They're disturbing the Albinaurics at the entrance to our domain.\nWould you attend to them, please?"},
             {"speaker": "Pureblood Knight Ansbach", "text": "At once, Lord Mohg."},
             {"speaker": "Mohg, Lord of Blood", "text": "Thank you. Return to me when the deed is done."}
         ]
@@ -150,11 +152,11 @@ class GameView(arcade.View):
             self.tutorial_text_object.draw()
 
         if self.show_dialogue:
-            arcade.draw_lrbt_rectangle_filled(250, 1100, 50, 200, arcade.color.BLACK)
+            arcade.draw_lrbt_rectangle_filled(250, 1100, 30, 200, arcade.color.BLACK)
             arcade.draw_lrbt_rectangle_outline(
     250, 
     1100, 
-    50, 
+    30, 
     200, 
     arcade.color.GOLD, 
     border_width=4
