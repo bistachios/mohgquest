@@ -83,7 +83,7 @@ class Room1(Room):
 
     def draw_ui(self, player):
         distance = arcade.get_distance_between_sprites(player, self.npc_sprite)
-        if distance < TALK_DISTANCE:
+        if distance < TALK_DISTANCE and not self.show_dialogue:
             self.tutorial_text_object.draw()
 
         if self.show_dialogue:
@@ -105,7 +105,7 @@ class Room2(Room):
 
         self.enemy_sprite = arcade.Sprite(
             "assets/images/tarnished.png",
-            scale=SPRITE_SCALING,
+            scale=ENEMY_SCALING,
         )
 
         self.enemy_sprite.center_x = 1050
