@@ -15,14 +15,9 @@ class GameView(arcade.View):
         self.physics_engine = None
 
         script_directory = os.path.dirname(__file__)
-        absolute_path = os.path.join(script_directory, "assets", "sounds", "BGM1.wav")
-        if os.path.exists(absolute_path):
-            print(f"Success! Found the file at: {absolute_path}")
-        else:
-            print(f"Ruh-roh! File NOT found at {absolute_path}")
-
+        absolute_path = os.path.join(script_directory, "assets", "sounds", "BGM1.ogg")
         self.music = arcade.Sound(absolute_path)
-        self.music_player = self.music.play(volume=1.0, loop=True)
+        self.music_player = self.music.play(volume=0.1, loop=True)
 
     def setup(self):
         self.player_sprite = arcade.Sprite(
