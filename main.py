@@ -35,6 +35,9 @@ class GameView(arcade.View):
             self.rooms[self.current_room].wall_list,
         )
 
+        self.music = arcade.Sound("assets/sounds/BGM1.mp3")
+        self.music.play(volume=0.5, loop=True)
+
         self.quest_given = False
 
     def on_draw(self):
