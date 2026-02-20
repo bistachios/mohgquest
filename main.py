@@ -1,4 +1,5 @@
 import arcade
+import os
 from constants import *
 from rooms import Room1, Room2
 
@@ -12,6 +13,16 @@ class GameView(arcade.View):
         self.player_sprite = None
         self.player_list = None
         self.physics_engine = None
+
+        script_directory = os.path.dirname(__file__)
+        absolute_path = os.path.join(script_directory, "assets", "sounds", "BGM1.wav")
+        if os.path.exists(absolute_path):
+            print(f"Success! Found the file at: {absolute_path}")
+        else:
+            print(f"Ruh-roh! File NOT found at {absolute_path}")
+
+        self.music = arcade.Sound(absolute_path)
+        self.music_player = self.music.play(volume=1.0, loop=True)
 
     def setup(self):
         self.player_sprite = arcade.Sprite(
@@ -34,9 +45,6 @@ class GameView(arcade.View):
             self.player_sprite,
             self.rooms[self.current_room].wall_list,
         )
-
-        self.music = arcade.Sound("assets/sounds/BGM1.mp3")
-        self.music.play(volume=0.5, loop=True)
 
         self.quest_given = False
 
