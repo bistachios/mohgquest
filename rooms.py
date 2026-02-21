@@ -1,4 +1,5 @@
 import arcade
+import os
 from constants import *
 
 
@@ -73,7 +74,7 @@ class Room1(Room):
         
             self.speaker_text_object.text = current_line["speaker"]
             self.dialogue_text_object.text = current_line["text"]
-        
+
             if current_line["speaker"] == "Pureblood Knight Ansbach":
                 self.speaker_text_object.color = arcade.color.SILVER
             else:

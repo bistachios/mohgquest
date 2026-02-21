@@ -1,5 +1,4 @@
 import arcade
-import os
 from constants import *
 from rooms import Room1, Room2
 
@@ -14,10 +13,8 @@ class GameView(arcade.View):
         self.player_list = None
         self.physics_engine = None
 
-        script_directory = os.path.dirname(__file__)
-        absolute_path = os.path.join(script_directory, "assets", "sounds", "BGM1.ogg")
-        self.music = arcade.Sound(absolute_path)
-        self.music_player = self.music.play(volume=0.1, loop=True)
+        self.music = arcade.load_sound("assets/sounds/BGM1.ogg", streaming=True)
+        arcade.play_sound(self.music, volume=0.1, loop=True)
 
     def setup(self):
         self.player_sprite = arcade.Sprite(
