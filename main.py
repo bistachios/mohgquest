@@ -13,9 +13,6 @@ class GameView(arcade.View):
         self.player_list = None
         self.physics_engine = None
 
-        self.music = arcade.load_sound("assets/sounds/BGM1.ogg", streaming=True)
-        arcade.play_sound(self.music, volume=0.1, loop=True)
-
     def setup(self):
         self.player_sprite = arcade.Sprite(
             "assets/images/ansbach.png",
@@ -39,6 +36,7 @@ class GameView(arcade.View):
         )
 
         self.quest_given = False
+        self.quest_completed = False
 
     def on_draw(self):
         self.clear()
@@ -69,7 +67,7 @@ class GameView(arcade.View):
             if hasattr(current_room, "npc_sprite"):
                 distance = arcade.get_distance_between_sprites(self.player_sprite, current_room.npc_sprite)
                 if distance < TALK_DISTANCE:
-                    if self.quest_given and not current_room.show_dialogue:
+                    if self.quest_given and not self.quest_completed and not current_room.show_dialogue:
                         current_room.speaker_text_object.text = "Mohg, Lord of Blood"
                         current_room.dialogue_text_object.text = "Back so soon? Did you wish for a kiss before you left, my dear?"
                         current_room.show_dialogue = True
@@ -85,6 +83,28 @@ class GameView(arcade.View):
                         else:
                             current_room.show_dialogue = False
                             self.quest_given = True
+            if hasattr(current_room, "enemy_sprite"):
+                distance = arcade.get_distance_between_sprites(self.player_sprite, current_room.enemy_sprite)
+                if distance < TALK_DISTANCE:
+                    if not current_room.show_dialogue:
+                        current_room.dialogue_index = 0
+                        current_room.show_dialogue = True
+                        current_room.update_dialogue()
+                    else:
+                        current_room.dialogue_index += 1
+                        if current_room.dialogue_index < len(current_room.dialogue_lines):
+                            current_room.update_dialogue()
+                        else:
+                            current_room.show_dialogue = False
+                            current_room.enemy_sprite.kill()
+                            self.quest_completed = True
+            if hasattr(current_room, "npc_sprite"):
+                distance = arcade.get_distance_between_sprites(self.player_sprite, current_room.npc_sprite)
+                if distance < TALK_DISTANCE:
+                    if self.quest_completed:
+                        current_room.speaker_text_object.text = "Pureblood Knight Ansbach"
+                        current_room.dialogue_text_object.text = "The Tarnished has left, Lord Mohg."
+
 
     def on_key_release(self, key, modifiers):
 
