@@ -72,18 +72,29 @@ class GameView(arcade.View):
                         current_room.dialogue_text_object.text = "Back so soon? Did you wish for a kiss before you left, my dear?"
                         current_room.show_dialogue = True
                         return
+    
+                    if self.quest_completed:
+                        max_index = len(current_room.dialogue_lines)
+                    else:
+                        max_index = 4
+    
                     if not current_room.show_dialogue:
-                        current_room.dialogue_index = 0
+                        if self.quest_completed:
+                            current_room.dialogue_index = 4
+                        else:
+                            current_room.dialogue_index = 0
                         current_room.show_dialogue = True
                         current_room.update_dialogue()
                     else:
                         current_room.dialogue_index += 1
-                        if current_room.dialogue_index < len(current_room.dialogue_lines):
+                        if current_room.dialogue_index < max_index:
                             current_room.update_dialogue()
                         else:
                             current_room.show_dialogue = False
+                        if not self.quest_completed:
                             self.quest_given = True
-            if hasattr(current_room, "enemy_sprite"):
+                                
+            if hasattr(current_room, "enemy_sprite") and current_room.enemy_sprite is not None:
                 distance = arcade.get_distance_between_sprites(self.player_sprite, current_room.enemy_sprite)
                 if distance < TALK_DISTANCE:
                     if not current_room.show_dialogue:
@@ -96,15 +107,10 @@ class GameView(arcade.View):
                             current_room.update_dialogue()
                         else:
                             current_room.show_dialogue = False
-                            current_room.enemy_sprite.kill()
                             self.quest_completed = True
-            if hasattr(current_room, "npc_sprite"):
-                distance = arcade.get_distance_between_sprites(self.player_sprite, current_room.npc_sprite)
-                if distance < TALK_DISTANCE:
-                    if self.quest_completed:
-                        current_room.speaker_text_object.text = "Pureblood Knight Ansbach"
-                        current_room.dialogue_text_object.text = "The Tarnished has left, Lord Mohg."
-
+                            current_room.enemy_sprite.kill()
+                            current_room.enemy_sprite = None
+                            print(f"Quest completed: {self.quest_completed}")
 
     def on_key_release(self, key, modifiers):
 

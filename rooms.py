@@ -63,21 +63,18 @@ class Room1(Room):
             {"speaker": "Mohg, Lord of Blood", "text": "Dearest Ansbach...it seems we have a Tarnished visitor."},
             {"speaker": "Mohg, Lord of Blood", "text": "They're disturbing the Albinaurics at the entrance to our domain.\nWould you attend to them, please?"},
             {"speaker": "Pureblood Knight Ansbach", "text": "At once, Lord Mohg."},
-            {"speaker": "Mohg, Lord of Blood", "text": "Thank you. Return to me when the deed is done."}
-        ]
-        self.dialogue_index = 0
-        self.show_dialogue = False
-
-        self.questcomplete_lines = [
+            {"speaker": "Mohg, Lord of Blood", "text": "Thank you. Return to me when the deed is done."},
             {"speaker": "Pureblood Knight Ansbach", "text": "The Tarnished has left, Lord Mohg."},
             {"speaker": "Mohg, Lord of Blood", "text": "And not a scratch on you! As expected, dearest knight."},
             {"speaker": "Pureblood Knight Ansbach", "text": "We did not fight, in truth. I thought a simple chat might\nconvince them to leave"},
             {"speaker": "Pureblood Knight Ansbach", "text": "It was, if I may say...a very odd exchange."},
             {"speaker": "Mohg, Lord of Blood", "text": "Oh? Do tell."},
-            {"speaker": "Mohg, Lord of Blood", "text": "But first, your reward."},
-
+            {"speaker": "Mohg, Lord of Blood", "text": "But first, your reward."}
         ]
+        self.dialogue_index = 0
+        self.show_dialogue = False
 
+    
     def update_dialogue(self):
         if self.dialogue_index < len(self.dialogue_lines):
             current_line = self.dialogue_lines[self.dialogue_index]
@@ -190,19 +187,20 @@ class Room2(Room):
             self.show_dialogue = True
     
     def draw_ui(self, player):
-        distance = arcade.get_distance_between_sprites(player, self.enemy_sprite)
-        if distance < TALK_DISTANCE and not self.show_dialogue:
-            self.tutorial_text_object.draw()
+        if self.enemy_sprite is not None:
+            distance = arcade.get_distance_between_sprites(player, self.enemy_sprite)
+            if distance < TALK_DISTANCE and not self.show_dialogue:
+                self.tutorial_text_object.draw()
 
-        if self.show_dialogue:
-            arcade.draw_lrbt_rectangle_filled(250, 1100, 150, 300, arcade.color.BLACK)
-            arcade.draw_lrbt_rectangle_outline(
-            250, 
-            1100, 
-            150, 
-            300, 
-            arcade.color.GOLD, 
-            border_width=4
-        )
-            self.dialogue_text_object.draw()
-            self.enemy_text_object.draw()
+            if self.show_dialogue:
+                arcade.draw_lrbt_rectangle_filled(250, 1100, 150, 300, arcade.color.BLACK)
+                arcade.draw_lrbt_rectangle_outline(
+                250, 
+                1100, 
+                150, 
+                300, 
+                arcade.color.GOLD, 
+                border_width=4
+            )
+                self.dialogue_text_object.draw()
+                self.enemy_text_object.draw()
