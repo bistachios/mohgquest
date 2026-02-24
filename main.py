@@ -13,7 +13,7 @@ class GameView(arcade.View):
         self.player_list = None
         self.physics_engine = None
 
-        self.music = self.music = arcade.load_sound("assets/sounds/BGM1.ogg", streaming=True)
+        self.music = self.music = arcade.load_sound("assets/sounds/BGM1.ogg", streaming=False)
         self.music_player = None
 
     def setup(self):

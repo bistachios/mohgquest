@@ -2,12 +2,9 @@ import arcade
 from constants import *
 
 
-BACKGROUND_1 = arcade.load_texture("assets/images/MPBG.png")
-BACKGROUND_2 = arcade.load_texture("assets/images/MPBG2.png")
-
 class Room:
-    def __init__(self, background):
-        self.background = background
+    def __init__(self):
+        self.background = None
         self.wall_list = arcade.SpriteList()
         self.room_sprites = arcade.SpriteList()
     
@@ -16,8 +13,9 @@ class Room:
     
 class Room1(Room):
     def __init__(self):
-        super().__init__(BACKGROUND_1)
+        super().__init__()
 
+        self.background = arcade.load_texture("assets/images/MPBG.png")
         self.npc_sprite = arcade.Sprite(
             "assets/images/mohg.PNG",
             scale=NPC_SCALING
@@ -108,8 +106,9 @@ class Room1(Room):
 
 class Room2(Room):
     def __init__(self):
-        super().__init__(BACKGROUND_2)
+        super().__init__()
 
+        self.background = arcade.load_texture("assets/images/MPBG2.png")
         self.enemy_sprite = arcade.Sprite(
             "assets/images/tarnished.png",
             scale=ENEMY_SCALING,
