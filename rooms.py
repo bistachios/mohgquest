@@ -25,6 +25,10 @@ class Room1(Room):
         self.npc_sprite.center_y = 150
         self.room_sprites.append(self.npc_sprite)
 
+        self.heart_sprite = arcade.Sprite("assets/images/love.png", scale=HEART_SCALING)
+        self.heart_sprite.center_x = 170
+        self.heart_sprite.center_y = 300
+
         arcade.load_font("assets/fonts/Quintessential-Regular.ttf")
 
         self.tutorial_text_object = arcade.Text(
@@ -103,6 +107,10 @@ class Room1(Room):
         )
             self.dialogue_text_object.draw()
             self.speaker_text_object.draw()
+
+        if self.dialogue_index == len(self.dialogue_lines):
+            arcade.draw_sprite(self.heart_sprite)
+            
 
 class Room2(Room):
     def __init__(self):

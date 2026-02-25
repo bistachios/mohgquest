@@ -1,3 +1,5 @@
+import os
+os.environ["ARCADE_SOUND_BACKEND"] = "null"
 import arcade
 from constants import *
 from rooms import Room1, Room2
