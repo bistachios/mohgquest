@@ -63,7 +63,7 @@ class Room1(Room):
             {"speaker": "Mohg, Lord of Blood", "text": "Thank you. Return to me when the deed is done."},
             {"speaker": "Pureblood Knight Ansbach", "text": "The Tarnished has left, Lord Mohg."},
             {"speaker": "Mohg, Lord of Blood", "text": "And not a scratch on you! As expected, dearest knight."},
-            {"speaker": "Pureblood Knight Ansbach", "text": "We did not fight, in truth. I thought a simple chat might\nconvince them to leave"},
+            {"speaker": "Pureblood Knight Ansbach", "text": "We did not fight, in truth. I thought a simple chat might\nconvince them to leave."},
             {"speaker": "Pureblood Knight Ansbach", "text": "It was, if I may say...a very odd exchange."},
             {"speaker": "Mohg, Lord of Blood", "text": "Oh? Do tell."},
             {"speaker": "Mohg, Lord of Blood", "text": "But first, your reward."}
@@ -88,7 +88,7 @@ class Room1(Room):
 
     def draw_ui(self, player):
         distance = arcade.get_distance_between_sprites(player, self.npc_sprite)
-        if distance < TALK_DISTANCE and not self.show_dialogue:
+        if distance < TALK_DISTANCE and not self.show_dialogue and not self.dialogue_index == len(self.dialogue_lines):
             self.tutorial_text_object.draw()
 
         if self.show_dialogue:
@@ -130,7 +130,7 @@ class Room2(Room):
         self.enemy_text_object = arcade.Text(
             text="Tarnished",
             x=275,
-            y=260,
+            y=315,
             color=arcade.color.COBALT,
             font_size=20,
             font_name="Quintessential"
@@ -139,7 +139,7 @@ class Room2(Room):
         self.dialogue_text_object = arcade.Text(
             text="",
             x=350,
-            y=210,
+            y=270,
             color=arcade.color.WHITE,
             font_size=20,
             font_name="Quintessential",
@@ -191,12 +191,12 @@ class Room2(Room):
                 self.tutorial_text_object.draw()
 
             if self.show_dialogue:
-                arcade.draw_lrbt_rectangle_filled(250, 1100, 150, 300, arcade.color.BLACK)
+                arcade.draw_lrbt_rectangle_filled(250, 1100, 200, 350, arcade.color.BLACK)
                 arcade.draw_lrbt_rectangle_outline(
                 250, 
                 1100, 
-                150, 
-                300, 
+                200, 
+                350, 
                 arcade.color.GOLD, 
                 border_width=4
             )

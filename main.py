@@ -13,13 +13,7 @@ class GameView(arcade.View):
         self.player_list = None
         self.physics_engine = None
 
-        self.music = self.music = arcade.load_sound("assets/sounds/BGM1.ogg", streaming=False)
-        self.music_player = None
-
     def setup(self):
-
-        if not self.music_player or not self.music_player.playing:
-            self.music_player = arcade.play_sound(self.music, volume=0.3, loop=True)
 
         self.player_sprite = arcade.Sprite(
             "assets/images/ansbach.png",
